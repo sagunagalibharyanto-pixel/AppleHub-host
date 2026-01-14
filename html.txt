@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>AppleHub.id</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+body{background:#f1f5f9;color:#0f172a}
+
+/* ===== LOGIN ===== */
+#loginPage{
+min-height:100vh;display:flex;justify-content:center;align-items:center;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+position:relative;
+overflow:hidden;
+}
+#loginPage::before{
+content:"";
+position:absolute;top:0;left:0;width:100%;height:100%;
+background:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+opacity:0.1;
+}
+.login-card{
+width:380px;padding:40px;background:rgba(255,255,255,.2);
+backdrop-filter:blur(20px);border-radius:20px;color:#fff;
+box-shadow:0 15px 35px rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);
+position:relative;z-index:1;
+}
+.login-card .apple-icon{
+text-align:center;margin-bottom:20px;font-size:50px;color:#fff;
+}
+.login-card h2{text-align:center;margin-bottom:30px;font-weight:600}
+.field{position:relative;margin-bottom:25px}
+.field input{
+width:100%;padding:15px 15px 15px 45px;border:none;border-radius:12px;outline:none;
+background:rgba(255,255,255,.1);color:#fff;font-size:16px;
+border:1px solid rgba(255,255,255,.2);
+}
+.field input::placeholder{color:#ddd}
+.field .fa-user,.field .fa-lock{
+position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#fff;
+}
+.btn{
+width:100%;padding:15px;border:none;border-radius:12px;
+background:linear-gradient(135deg,#0ea5e9,#0284c7);
+color:#fff;font-size:16px;font-weight:600;cursor:pointer;
+transition:transform 0.2s;
+}
+.btn:hover{transform:translateY(-2px)}
+
+/* ===== MARKETPLACE ===== */
+#marketPage{display:none}
+header{background:#020617;color:#fff;padding:18px;display:flex;justify-content:space-between;align-items:center}
+header h2{margin:0}
+.logout-btn{background:#ff4757;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
+.container{max-width:900px;margin:auto;padding:20px}
+.store-desc{background:#fff;padding:18px;border-radius:14px;margin-bottom:15px}
+
+.filter{display:flex;gap:10px;margin-bottom:15px}
+.filter input,.filter select{
+width:100%;padding:10px;border-radius:10px;border:1px solid #cbd5e1
+}
+
+.product{
+background:#fff;padding:15px;border-radius:14px;margin-bottom:14px;
+box-shadow:0 6px 16px rgba(0,0,0,.08);display:flex;gap:15px
+}
+.product img{width:80px;height:80px;object-fit:cover;border-radius:10px}
+.product-details{flex:1}
+.product h4{font-size:15px}
+.rating{color:#facc15;font-size:13px}
+.product p{font-size:13px;color:#475569}
+.price{font-weight:600;margin:6px 0}
+
+.product button{
+width:100%;padding:10px;border:none;border-radius:12px;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:#fff;font-weight:500;cursor:pointer
+}
+
+/* CART FLOAT */
+.cart{
+position:fixed;bottom:20px;right:20px;width:260px;
+background:#fff;border-radius:16px;padding:14px;
+box-shadow:0 10px 25px rgba(0,0,0,.25)
+}
+.cart h3{font-size:14px;margin-bottom:6px}
+.cart-item{display:flex;justify-content:space-between;font-size:12px}
+.qty button{
+width:20px;height:20px;border:none;border-radius:6px;
+background:#e5e7eb;cursor:pointer
+}
+.total{font-weight:600;margin-top:6px}
+.checkout{
+width:100%;margin-top:8px;padding:10px;border:none;
+border-radius:12px;background:#0284c7;color:#fff
+}
+
+/* MODAL */
+.modal{
+display:none;position:fixed;top:0;left:0;width:100%;
+height:100%;background:rgba(0,0,0,.6);
+justify-content:center;align-items:center
+}
+.modal-content{
+background:#fff;width:90%;max-width:380px;
+border-radius:16px;padding:20px;position:relative
+}
+.close-btn{
+position:absolute;top:10px;right:10px;background:none;border:none;
+font-size:20px;color:#666;cursor:pointer
+}
+.modal input,.modal select{
+width:100%;padding:8px;margin-bottom:10px;
+border-radius:8px;border:1px solid #cbd5e1
+}
+.method{display:flex;gap:8px}
+.method button{
+width:50%;padding:8px;border:none;border-radius:8px;color:#fff
+}
+.wa{background:#22c55e}
+.ig{background:#E1306C}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="loginPage">
+  <div class="login-card">
+    <div class="apple-icon"><i class="fab fa-apple"></i></div>
+    <h2>Login AppleHub</h2>
+    <div class="field">
+      <i class="fas fa-user"></i>
+      <input id="user" placeholder="Username" class="field">
+    </div>
+    <div class="field">
+      <i class="fas fa-lock"></i>
+      <input id="pass" type="password" placeholder="Password" class="field">
+    </div>
+    <button class="btn" onclick="login()">Login</button>
+  </div>
+</div>
+
+<!-- MARKET -->
+<div id="marketPage">
+<header>
+  <h2>applehub.id</h2>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+<div class="store-desc">
+<h3>Marketplace Gadget AppleHub</h3>
+<p>Produk Apple & aksesoris original</p>
+</div>
+
+<div class="filter">
+<input id="search" placeholder="Cari produk..." oninput="renderProducts()">
+<select id="sort" onchange="renderProducts()">
+<option value="">Urutkan</option>
+<option value="murah">Termurah</option>
+<option value="mahal">Termahal</option>
+<option value="rating">Rating</option>
+</select>
+</div>
+
+<div id="productList"></div>
+</div>
+
+<div class="cart">
+<h3>Keranjang</h3>
+<div id="cartItems">Kosong</div>
+<div id="totalHarga"></div>
+<button class="checkout" onclick="openCheckout()">Checkout</button>
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="checkoutModal">
+<div class="modal-content">
+<button class="close-btn" onclick="closeCheckout()">&times;</button>
+<h3>Checkout</h3>
+<input id="nama" placeholder="Nama">
+<input id="alamat" placeholder="Alamat">
+<select id="bayar">
+<option>Transfer</option>
+<option>COD</option>
+<option>E-Wallet</option>
+</select>
+<div class="method">
+<button class="wa" onclick="checkoutWA()">WhatsApp</button>
+<button class="ig" onclick="checkoutIG()">Instagram</button>
+</div>
+</div>
+</div>
+
+<script>
+function login(){
+if(user.value==="siswa" && pass.value==="000"){
+loginPage.style.display="none";
+marketPage.style.display="block";
+}else alert("Login salah");
+}
+
+function logout(){
+marketPage.style.display="none";
+loginPage.style.display="block";
+cart = [];
+updateCart();
+user.value = "";
+pass.value = "";
+}
+
+const products=[
+{name:"iPhone 15 Pro Max",price:22500000,r:4.9,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-max-blacktitanium-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1693009287427"},
+{name:"iPhone 15 Pro",price:19500000,r:4.8,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-blacktitanium-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1693009287427"},
+{name:"iPhone 15",price:16500000,r:4.7,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-black-select-202309?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1692925410843"},
+{name:"iPhone 14 Pro Max",price:20500000,r:4.8,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-max-deeppurple-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1662155410013"},
+{name:"iPhone 14 Pro",price:17500000,r:4.7,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-deeppurple-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1662155410013"},
+{name:"iPhone 14",price:14500000,r:4.6,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-blue-select-202209?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1660866225318"},
+{name:"iPhone 13 Pro Max",price:18500000,r:4.7,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1645501384074"},
+{name:"iPhone 13 Pro",price:15500000,r:4.6,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1645501384074"},
+{name:"iPhone 13",price:13500000,r:4.6,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-blue-select-2021?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1629842711000"},
+{name:"iPhone 12 Pro Max",price:16500000,r:4.5,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-max-graphite-hero?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1604021661000"},
+{name:"iPhone 12 Pro",price:14500000,r:4.5,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-pro-graphite-hero?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1604021661000"},
+{name:"iPhone 12",price:11500000,r:4.5,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-12-blue-select-2020?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1604343700000"},
+{name:"iPhone SE (2022)",price:8500000,r:4.4,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-se-red-select-202203?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1645720055318"},
+{name:"Apple Watch Series 9",price:7200000,r:4.5,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT2V3ref_VW_PF?wid=200&hei=200&fmt=jpeg&qlt=95&.v=1694507270909"},
+{name:"Apple Watch SE",price:4200000,r:4.4,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MT2V3ref_VW_PF?wid=200&hei=200&fmt=jpeg&qlt=95&.v=1694507270909"},
+{name:"AirPods Pro 2",price:3300000,r:4.4,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=200&hei=200&fmt=jpeg&qlt=95&.v=1660803972361"},
+{name:"AirPods 3",price:2800000,r:4.3,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MME73?wid=200&hei=200&fmt=jpeg&qlt=95&.v=1632861342000"},
+{name:"Charger 20W",price:350000,r:4.3,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MU7V2?wid=200&hei=200&fmt=jpeg&qlt=95&.v=1542406416000"},
+{name:"MagSafe",price:750000,r:4.2,image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MHXH3?wid=200&hei=200&fmt=jpeg&qlt=95&.v=1565993280000"}
+];
+
+let cart=[];
+
+function renderProducts(){
+let list=[...products];
+let q=search.value.toLowerCase();
+let s=sort.value;
+list=list.filter(p=>p.name.toLowerCase().includes(q));
+if(s==="murah")list.sort((a,b)=>a.price-b.price);
+if(s==="mahal")list.sort((a,b)=>b.price-a.price);
+if(s==="rating")list.sort((a,b)=>b.r-a.r);
+
+productList.innerHTML="";
+list.forEach(p=>{
+productList.innerHTML+=`
+<div class="product">
+<img src="${p.image}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/80x80?text=No+Image'">
+<div class="product-details">
+<h4>${p.name}</h4>
+<div class="rating">★ ${p.r}</div>
+<div class="price">Rp ${p.price.toLocaleString()}</div>
+<button onclick="addCart('${p.name}')">Tambah ke Keranjang</button>
+</div>
+</div>`;
+});
+}
+
+function addCart(n){
+let p=products.find(x=>x.name===n);
+let f=cart.find(c=>c.name===n);
+if(f)f.qty++;else cart.push({name:p.name,price:p.price,qty:1});
+updateCart();
+}
+
+function updateCart(){
+cartItems.innerHTML="";
+let total=0;
+if(cart.length===0){cartItems.innerHTML="Kosong";totalHarga.innerHTML="";return;}
+cart.forEach((c,i)=>{
+total+=c.price*c.qty;
+cartItems.innerHTML+=`
+<div class="cart-item">
+<span>${c.name}</span>
+<span class="qty">
+<button onclick="cart[${i}].qty--;updateCart()">-</button>
+${c.qty}
+<button onclick="cart[${i}].qty++;updateCart()">+</button>
+</span>
+</div>`;
+});
+cart=cart.filter(c=>c.qty>0);
+totalHarga.innerHTML="Rp "+total.toLocaleString();
+}
+
+function openCheckout(){
+if(cart.length===0)return alert("Keranjang kosong");
+checkoutModal.style.display="flex";
+}
+function closeCheckout(){
+checkoutModal.style.display="none";
+}
+function checkoutWA(){window.open("https://wa.me/6281234567890")}
+function checkoutIG(){window.open("https://instagram.com/sgalibb")}
+
+renderProducts();
+</script>
+
+</body>
+</html>
